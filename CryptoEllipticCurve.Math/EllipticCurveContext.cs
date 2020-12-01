@@ -244,6 +244,80 @@ namespace CryptoEllipticCurve.Math
             return p.X == publicKey.X && p.Y == publicKey.Y;
         }
 
+        public (BigInteger, BigInteger) PreComputedSign()
+        {
+            if (EllipticCurvePoint.IsInfinity(curve.BasePoint))
+            {
+                throw new Exception("Base point uninitialized");
+            }
+
+            while (true)
+            {
+                BigInteger e = GetRandomIntegerFromField();
+                EllipticCurvePoint r = ScalarMult(e, curve.BasePoint);
+
+                if (!EllipticCurvePoint.IsInfinity(r) && r.X != 0)
+                {
+                    return (e, r.X);
+                }
+            }
+        }
+
+        public BigInteger TransformHash(byte[] hash)
+        {
+            BigInteger hashInt = new BigInteger(hash);
+            if (hashInt < 0)
+            {
+                hashInt = -hashInt;
+            }
+
+            return hashInt.Seek(curve.N.GetBitCount() - 1);
+        }
+
+        public (BigInteger, BigInteger) SignMessage(byte[] message, BigInteger privateKey, EllipticCurvePoint publicKey, HashAlgorithm hashAlgorithm)
+        {
+            if (!IsValidPrivateKey(privateKey, publicKey))
+            {
+                throw new Exception("Private key is invalid");
+            }
+
+            byte[] hash = hashAlgorithm.ComputeHash(message);
+            BigInteger hashInt = TransformHash(hash);
+
+            BigInteger e, fe, r, s;
+            do
+            {
+                (e, fe) = PreComputedSign();
+                r = fe.MultGF(hashInt, curve.P).Seek(curve.N.GetBitCount() - 1);
+                s = (r * privateKey + e) % curve.N;//r.MultGF(privateKey, curve.P).AddGF(e).ModulusGF(curve.N);
+            } while (r == 0 || s == 0);
+
+            return (r, s);
+        }
+
+        public bool VerifySign(byte[] message, EllipticCurvePoint publicKey, BigInteger r, BigInteger s, HashAlgorithm hashAlgorithm)
+        {
+            if (!IsValidPublicKey(publicKey))
+            {
+                throw new Exception("Public key is invalid");
+            }
+
+            if (r >= curve.N || s >= curve.N || r <= 0 || s <= 0)
+            {
+                return false;
+            }
+
+            byte[] hash = hashAlgorithm.ComputeHash(message);
+            BigInteger hashInt = TransformHash(hash);
+
+            var R = Add(ScalarMult(s, curve.BasePoint), ScalarMult(r, publicKey));
+            var y = R.X.MultGF(hashInt, curve.P);
+            var r1 = y.Seek(curve.N.GetBitCount() - 1);
+
+            return r1 == r;
+        }
+
+
         private void CheckOnCurve(EllipticCurvePoint a)
         {
             if (!curve.IsOnCurve(a))

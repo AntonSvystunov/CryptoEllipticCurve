@@ -1,9 +1,11 @@
 ﻿using CryptoEllipticCurve.Math;
+using CryptoHash.SHA256C;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 
 namespace CryptoEllipticCurve
 {
@@ -37,6 +39,22 @@ namespace CryptoEllipticCurve
             Console.WriteLine($"Is valid public key: {context.IsValidPublicKey(publicKey)}");
             Console.WriteLine($"Is valid private key: {context.IsValidPrivateKey(privateKey, publicKey)}");
 
+            using var sha = new SHA256C();
+            var msg = "Transfer 1 dollar";
+            var fake = "Transfer 1000 dollars";
+            var msgBytes = Encoding.ASCII.GetBytes(msg);
+            var fakeBytes = Encoding.ASCII.GetBytes(fake);
+            Console.WriteLine($"Message to sign: {msg}");
+            var (r, s) = context.SignMessage(msgBytes, privateKey, publicKey, sha);
+
+            Console.WriteLine($"R = {r}");
+            Console.WriteLine($"S = {s}");
+            sha.Initialize();
+            var result = context.VerifySign(msgBytes, publicKey, r, s, sha);
+            Console.WriteLine($"Verify <{msg}>: {result}");
+            sha.Initialize();
+            result = context.VerifySign(fakeBytes, publicKey, r, s, sha);
+            Console.WriteLine($"Verify <{fake}>: {result}");
         }
     }
 }

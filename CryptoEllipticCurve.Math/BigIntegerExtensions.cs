@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CryptoEllipticCurve.Math
 {
-    static class BigIntegerExtensions
+    public static class BigIntegerExtensions
     {
         static readonly BigInteger FastSqrtSmallNumber = 4503599761588224UL; 
         static BigInteger SqrtFast(BigInteger value)
@@ -49,6 +49,15 @@ namespace CryptoEllipticCurve.Math
         public static int LSB(this BigInteger a)
         {
             return (a == 0 ? -1 : (int)BigInteger.Log(a & -a, 2));
+        }
+
+        public static BigInteger Seek(this BigInteger a, int bitLenght)
+        {
+            for (int j = a.GetBitCount() - 1; j >= bitLenght && j >= 0; j--)
+            {
+                a &=  ~(BigInteger.One << j);
+            }
+            return a;
         }
     }
 }

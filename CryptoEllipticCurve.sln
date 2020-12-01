@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoEllipticCurve", "CryptoEllipticCurve\CryptoEllipticCurve.csproj", "{AEF8B51D-182A-4E00-9025-0A3D5FDA94E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoEllipticCurve", "CryptoEllipticCurve\CryptoEllipticCurve.csproj", "{AEF8B51D-182A-4E00-9025-0A3D5FDA94E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoEllipticCurve.Math", "CryptoEllipticCurve.Math\CryptoEllipticCurve.Math.csproj", "{33BB38EF-E59F-4B64-830D-F5C52F7BF1C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoEllipticCurve.Math", "CryptoEllipticCurve.Math\CryptoEllipticCurve.Math.csproj", "{33BB38EF-E59F-4B64-830D-F5C52F7BF1C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoHash.SHA256C", "CryptoHash.SHA256C\CryptoHash.SHA256C.csproj", "{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{33BB38EF-E59F-4B64-830D-F5C52F7BF1C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33BB38EF-E59F-4B64-830D-F5C52F7BF1C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33BB38EF-E59F-4B64-830D-F5C52F7BF1C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

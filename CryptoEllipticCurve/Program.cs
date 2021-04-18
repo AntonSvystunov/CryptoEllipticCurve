@@ -1,4 +1,5 @@
 ﻿using CryptoEllipticCurve.Math;
+using CryptoHash.Kupyna;
 using CryptoHash.SHA256C;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,6 @@ namespace CryptoEllipticCurve
 {
     class Program
     {
-        static BigInteger FromList(IEnumerable<int> list)
-        {
-            int max = list.Max();
-            BigInteger modulus = 0;
-            foreach (var kbit in list)
-                modulus |= 1 << kbit;
-
-            return modulus;
-        }
-
         static void Main(string[] args)
         {
             BigInteger p = BigInteger.Parse("300613450595050653169853516389035139504087366260264943450533244356122755214669880763353471793250393988089774081");
@@ -39,21 +30,21 @@ namespace CryptoEllipticCurve
             Console.WriteLine($"Is valid public key: {context.IsValidPublicKey(publicKey)}");
             Console.WriteLine($"Is valid private key: {context.IsValidPrivateKey(privateKey, publicKey)}");
 
-            using var sha = new SHA256C();
+            using var hashFuction = new KupynaHash(256);
             var msg = "Transfer 1 dollar";
             var fake = "Transfer 1000 dollars";
             var msgBytes = Encoding.ASCII.GetBytes(msg);
             var fakeBytes = Encoding.ASCII.GetBytes(fake);
             Console.WriteLine($"Message to sign: {msg}");
-            var (r, s) = context.SignMessage(msgBytes, privateKey, publicKey, sha);
+            var (r, s) = context.SignMessage(msgBytes, privateKey, publicKey, hashFuction);
 
             Console.WriteLine($"R = {r}");
             Console.WriteLine($"S = {s}");
-            sha.Initialize();
-            var result = context.VerifySign(msgBytes, publicKey, r, s, sha);
+            hashFuction.Initialize();
+            var result = context.VerifySign(msgBytes, publicKey, r, s, hashFuction);
             Console.WriteLine($"Verify <{msg}>: {result}");
-            sha.Initialize();
-            result = context.VerifySign(fakeBytes, publicKey, r, s, sha);
+            hashFuction.Initialize();
+            result = context.VerifySign(fakeBytes, publicKey, r, s, hashFuction);
             Console.WriteLine($"Verify <{fake}>: {result}");
         }
     }

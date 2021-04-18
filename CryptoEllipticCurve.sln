@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoEllipticCurve.Math", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoHash.SHA256C", "CryptoHash.SHA256C\CryptoHash.SHA256C.csproj", "{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoHash.Kupyna", "CryptoHash.Kupyna\CryptoHash.Kupyna.csproj", "{D1FA09CB-B1D3-4FFE-9ED5-EF0F7EA25719}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B23B124-C9BB-41C7-8F41-29D6BFF554EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FA09CB-B1D3-4FFE-9ED5-EF0F7EA25719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FA09CB-B1D3-4FFE-9ED5-EF0F7EA25719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FA09CB-B1D3-4FFE-9ED5-EF0F7EA25719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FA09CB-B1D3-4FFE-9ED5-EF0F7EA25719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
